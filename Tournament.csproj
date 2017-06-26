@@ -60,6 +60,7 @@
     <Compile Include="TournamentPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\boom.ogg" />
     <None Include="Assets\LiberationMono-Regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
