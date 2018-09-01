@@ -5,6 +5,7 @@ using BrilliantSkies.Core.Id;
 using BrilliantSkies.Ftd.Planets.Instances;
 using BrilliantSkies.Core.Types;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace w0otness
 {
@@ -64,15 +65,15 @@ namespace w0otness
 						for (int i = 0; i < num; i++) {
 							float max = scs[i].CalculateResourceCost(false, true).Material;
 							float cur = scs[i].CalculateResourceCost(true, true).Material;
-							s[i + 1] = String.Format("{0} {1}", scs[i].blueprintName, Math.Round(cur / max * 100, 1));
+							s[i + 1] = string.Format("{0} {1}", scs[i].blueprintName, Math.Round(cur / max * 100, 1));
 							smax += max;
 							scur += cur;
 						}
-						s[0] = String.Format("{0} {1}", bp.blueprintName, Math.Round((bp.CalculateResourceCost(true, true).Material - scur) / (bp.CalculateResourceCost(false, true).Material - smax) * 100, 1));
+						s[0] = string.Format("{0} {1}", bp.blueprintName, Math.Round((bp.CalculateResourceCost(true, true).Material - scur) / (bp.CalculateResourceCost(false, true).Material - smax) * 100, 1));
 						return s;
 					} else {
 						var s = new string[1];
-						s[0] = String.Format("{0} {1}", bp.blueprintName, Math.Round(bp.CalculateResourceCost(true, true).Material / bp.CalculateResourceCost(false, true).Material * 100, 1));
+						s[0] = string.Format("{0} {1}", bp.blueprintName, Math.Round(bp.CalculateResourceCost(true, true).Material / bp.CalculateResourceCost(false, true).Material * 100, 1));
 						return s;
 					}
 				}
@@ -83,21 +84,8 @@ namespace w0otness
 		public void Spawn(float dis, float gap, int count, int pos)
 		{//TODO
 			MainConstruct mainConstruct = BlueprintConverter.Convert(bp);
-			team_id = IsKing ? InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.Name == "KING").Id : InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.Name == "CHAL").Id;
+			team_id = IsKing ? InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "K").Id : InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "C").Id;
 			BlueprintConverter.Initiate(mainConstruct, new Vector3d(VLoc(gap, count, pos, dis)), VDir(), team_id, null, SpawnPositioning.OriginOrCentre);
-			//SortedDictionary<int, TournamentParticipant> temp = new SortedDictionary<int, TournamentParticipant>();
-			//for 
-			//temp.Add(team_id, new TournamentParticipant
-			//{
-			//	TeamId = team_id,
-			//	TeamName = team_id.FactionSpec.AbreviatedName,
-			//	UniqueId = current.UniqueId,
-			//	BlueprintName = current.GetBlueprintName(),
-			//	AICount = current.BlockTypeStorage.MainframeStore.Blocks.Count,
-			//	HP = current.BlockTypeStorage.MainframeStore.Blocks.Count > 0 ? current.iMainStatus.GetFractionAliveBlocksIncludingSubConstructables() * 100 : current.iMainStatus.GetFractionAliveBlocks() * 100,
-			//	HPCUR = current.BlockTypeStorage.MainframeStore.Blocks.Count > 0 ? current.iMainStatus.GetNumberAliveBlocksIncludingSubConstructables() : current.iMainStatus.GetNumberAliveBlocks(),
-			//	HPMAX = current.BlockTypeStorage.MainframeStore.Blocks.Count > 0 ? current.iMainStatus.GetNumberBlocksIncludingSubConstructables() : current.iMainStatus.GetNumberBlocks()
-			//});
 		}
 		
 		public Vector3 VLoc(float gap, int count, int pos, float dis)

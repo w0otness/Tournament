@@ -148,12 +148,12 @@ namespace w0otness
 			HUDLog.Clear();
 			InstanceSpecification.i.Header.CommonSettings.EnemyBlockDestroyedResourceDrop = matconv / 100;
 
-			//1/entry_king.Spawn(spawndis);
-			//1/entry_king.team_id.FactionInst.ResourceStore.SetResources(maxmat);
-			//1/entry_king.res = maxmat;
-			//1/entry_chal.Spawn(spawndis);
-			//1/entry_chal.team_id.FactionInst.ResourceStore.SetResources(maxmat);
-			//1/entry_chal.res = maxmat;
+			//entry_king.Spawn(spawndis);
+			//entry_king.team_id.FactionInst.ResourceStore.SetResources(maxmat);
+			//entry_king.res = maxmat;
+			//entry_chal.Spawn(spawndis);
+			//entry_chal.team_id.FactionInst.ResourceStore.SetResources(maxmat);
+			//entry_chal.res = maxmat;
 
 			t1_res = maxmat;
 			foreach (TournamentEntry tp in entry_t1) {
