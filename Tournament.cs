@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using BrilliantSkies.Core.Timing;
 using BrilliantSkies.FromTheDepths.Game;
-using BrilliantSkies.FromTheDepths.Game.UserInterfaces;
-using BrilliantSkies.FromTheDepths.Planets;
+using BrilliantSkies.Ftd.Avatar;
+using BrilliantSkies.Ftd.Planets.Factions;
+using BrilliantSkies.Ftd.Planets.Instances;
+using BrilliantSkies.Ftd.Planets.Instances.Headers;
+using BrilliantSkies.Ui.Displayer;
 using UnityEngine;
-
 namespace w0otness
 {
 	public class Tournament
@@ -75,16 +78,18 @@ namespace w0otness
 		public float spawndis = 1000;
 		public float spawngap = 100;
 		public float penaltyhp = 50;
-		public float detection = 70;
 
+		/// <summary>
+		/// If true, the standard rules for despawning will be used.
+		/// </summary>
 		public bool srules = true;
 		public bool penaltynoai = true;
 		public bool standardhp = true;
 
 		private SortedDictionary<int,SortedDictionary<int,TournamentParticipant>> HUDLog = new SortedDictionary<int,SortedDictionary<int,TournamentParticipant>>();
 
-		//1/public TournamentEntry entry_king;
-		//1/public TournamentEntry entry_chal;
+		//public TournamentEntry entry_king;
+		//public TournamentEntry entry_chal;
 
 		public float t1_res;
 		public float t2_res;
@@ -143,8 +148,6 @@ namespace w0otness
 			HUDLog.Clear();
 			InstanceSpecification.i.Header.CommonSettings.EnemyBlockDestroyedResourceDrop = matconv / 100;
 
-			InstanceSpecification.i.GameConfiguration.AutomaticDetection.Value = detection;
-
 			//1/entry_king.Spawn(spawndis);
 			//1/entry_king.team_id.FactionInst.ResourceStore.SetResources(maxmat);
 			//1/entry_king.res = maxmat;
@@ -155,13 +158,13 @@ namespace w0otness
 			t1_res = maxmat;
 			foreach (TournamentEntry tp in entry_t1) {
 				tp.Spawn(spawndis, spawngap, entry_t1.Count, entry_t1.IndexOf(tp));
-				tp.team_id.FactionInst.ResourceStore.SetResources(maxmat);
+				tp.team_id.FactionInst().ResourceStore.SetResources(maxmat);
 			}
 
 			t2_res = maxmat;
 			foreach (TournamentEntry tp in entry_t2) {
 				tp.Spawn(spawndis, spawngap, entry_t2.Count, entry_t2.IndexOf(tp));
-				tp.team_id.FactionInst.ResourceStore.SetResources(maxmat);
+				tp.team_id.FactionInst().ResourceStore.SetResources(maxmat);
 			}
 
 			timerTotal = 0;
@@ -184,7 +187,7 @@ namespace w0otness
 				if (standardhp && !HUDLog[current.GetTeam().Id].ContainsKey(current.UniqueId)) {
 					HUDLog[current.GetTeam().Id].Add(current.UniqueId, new TournamentParticipant {
 						TeamId = current.GetTeam(),
-						TeamName = current.GetTeam().FactionSpec.AbreviatedName,
+						TeamName = current.GetTeam().FactionSpec().AbreviatedName,
 						UniqueId = current.UniqueId,
 						BlueprintName = current.GetBlueprintName(),
 						AICount = current.BlockTypeStorage.MainframeStore.Blocks.Count,
@@ -197,7 +200,7 @@ namespace w0otness
 				else if (!standardhp && !HUDLog[current.GetTeam().Id].ContainsKey(current.UniqueId)) {
 					HUDLog[current.GetTeam().Id].Add(current.UniqueId, new TournamentParticipant {
 						TeamId = current.GetTeam(),
-						TeamName = current.GetTeam().FactionSpec.AbreviatedName,
+						TeamName = current.GetTeam().FactionSpec().AbreviatedName,
 						UniqueId = current.UniqueId,
 						BlueprintName = current.GetBlueprintName(),
 						AICount = current.BlockTypeStorage.MainframeStore.Blocks.Count,
@@ -285,19 +288,19 @@ namespace w0otness
 			}
 		}
 
-		public void FixedUpdate(float dt)
+		public void FixedUpdate(ITimeStep dt)
 		{
 			if (Time.timeScale != 0) { //dont calc when paused....
 				if (matconv == -1) { //no material fix
-					if (t1_res < entry_t1[0].team_id.FactionInst.ResourceStore.Material.Quantity) {
-						entry_t1[0].team_id.FactionInst.ResourceStore.SetResources(t1_res);
+					if (t1_res < entry_t1[0].team_id.FactionInst().ResourceStore.Material.Quantity) {
+						entry_t1[0].team_id.FactionInst().ResourceStore.SetResources(t1_res);
 					} else {
-						t1_res = (float)entry_t1[0].team_id.FactionInst.ResourceStore.Material.Quantity;
+						t1_res = (float)entry_t1[0].team_id.FactionInst().ResourceStore.Material.Quantity;
 					}
-					if (t2_res < entry_t2[0].team_id.FactionInst.ResourceStore.Material.Quantity) {
-						entry_t1[0].team_id.FactionInst.ResourceStore.SetResources(t2_res);
+					if (t2_res < entry_t2[0].team_id.FactionInst().ResourceStore.Material.Quantity) {
+						entry_t2[0].team_id.FactionInst().ResourceStore.SetResources(t2_res);
 					} else {
-						t2_res = (float)entry_t1[0].team_id.FactionInst.ResourceStore.Material.Quantity;
+						t2_res = (float)entry_t2[0].team_id.FactionInst().ResourceStore.Material.Quantity;
 					}
 				}
 
@@ -320,10 +323,10 @@ namespace w0otness
 											float distance = Vector3.Distance(current.CentreOfMass, current2.CentreOfMass);
 											if (nearest < 0) {
 												nearest = distance;
-												nearestvelocity = Vector3.Distance(current.CentreOfMass + current.MainPhysics.iVelocities.VelocityVector, current2.CentreOfMass);
+												nearestvelocity = Vector3.Distance(current.CentreOfMass + current.iPartPhysics.iVelocities.VelocityVector, current2.CentreOfMass);
 											} else if (Vector3.Distance(current.CentreOfMass, current2.CentreOfMass) < nearest) {
 												nearest = distance;
-												nearestvelocity = Vector3.Distance(current.CentreOfMass + current.MainPhysics.iVelocities.VelocityVector, current2.CentreOfMass);
+												nearestvelocity = Vector3.Distance(current.CentreOfMass + current.iPartPhysics.iVelocities.VelocityVector, current2.CentreOfMass);
 											}
 										}
 									}
@@ -340,14 +343,14 @@ namespace w0otness
 			}
 		}
 
-		public void SlowUpdate(float dt)
+		public void SlowUpdate(ITimeStep dt)
 		{
 			foreach (MainConstruct current in StaticConstructablesManager.constructables.ToArray()) {
 				if (standardhp && (!HUDLog[current.GetTeam().Id][current.UniqueId].Disqual || !HUDLog[current.GetTeam().Id][current.UniqueId].Scrapping)) {
 					HUDLog[current.GetTeam().Id][current.UniqueId].HPCUR = current.iMainStatus.GetNumberAliveBlocksIncludingSubConstructables();
 					HUDLog[current.GetTeam().Id][current.UniqueId].HP =	current.iMainStatus.GetFractionAliveBlocksIncludingSubConstructables() * 100;
 				} else if (!standardhp && (!HUDLog[current.GetTeam().Id][current.UniqueId].Disqual || !HUDLog[current.GetTeam().Id][current.UniqueId].Scrapping)) {
-					HUDLog[current.GetTeam().Id][current.UniqueId].HPCUR = current.iResourceCosts.CalculateResourceCostOfAliveBlocks_ForCashBack(true).Material;
+					HUDLog[current.GetTeam().Id][current.UniqueId].HPCUR = current.iResourceCosts.CalculateResourceCostOfAliveBlocksIncludingSubConstructs_ForCashBack(true).Material;
 					HUDLog[current.GetTeam().Id][current.UniqueId].HP =	HUDLog[current.GetTeam().Id][current.UniqueId].HPCUR / HUDLog[current.GetTeam().Id][current.UniqueId].HPMAX * 100;
 				} else {
 					HUDLog[current.GetTeam().Id][current.UniqueId].HPCUR = 0;

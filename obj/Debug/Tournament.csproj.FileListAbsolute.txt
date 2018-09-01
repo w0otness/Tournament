@@ -1,0 +1,8 @@
+C:\Users\Christian\Documents\GitHub\Tournament\obj\Debug\Tournament.csprojAssemblyReference.cache
+C:\Users\Christian\Documents\GitHub\Tournament\obj\Debug\Tournament.csproj.CoreCompileInputs.cache
+C:\Users\Christian\Documents\Mods\Tournament\Assets\LiberationMono-Regular.ttf
+C:\Users\Christian\Documents\Mods\Tournament\header.header
+C:\Users\Christian\Documents\Mods\Tournament\plugin.json
+C:\Users\Christian\Documents\Mods\Tournament\Tournament.dll
+C:\Users\Christian\Documents\GitHub\Tournament\obj\Debug\Tournament.csproj.CopyComplete
+C:\Users\Christian\Documents\GitHub\Tournament\obj\Debug\Tournament.dll

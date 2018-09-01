@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Assets.Scripts;
 using Assets.Scripts.Persistence;
-using BrilliantSkies.FromTheDepths.Planets;
+using BrilliantSkies.Core.Id;
+using BrilliantSkies.Ftd.Planets.Instances;
+using BrilliantSkies.Core.Types;
 using UnityEngine;
 
 namespace w0otness
@@ -83,7 +84,7 @@ namespace w0otness
 		{//TODO
 			MainConstruct mainConstruct = BlueprintConverter.Convert(bp);
 			team_id = IsKing ? InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.Name == "KING").Id : InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.Name == "CHAL").Id;
-			BlueprintConverter.Initiate(mainConstruct, VLoc(gap, count, pos, dis), VDir(), team_id, null, SpawnPositioning.OriginOrCentre);
+			BlueprintConverter.Initiate(mainConstruct, new Vector3d(VLoc(gap, count, pos, dis)), VDir(), team_id, null, SpawnPositioning.OriginOrCentre);
 			//SortedDictionary<int, TournamentParticipant> temp = new SortedDictionary<int, TournamentParticipant>();
 			//for 
 			//temp.Add(team_id, new TournamentParticipant

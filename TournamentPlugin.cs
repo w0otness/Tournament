@@ -1,18 +1,22 @@
 ﻿using System;
-using BrilliantSkies.FromTheDepths.Game;
-using BrilliantSkies.FromTheDepths.Planets;
+using BrilliantSkies.Core.Modding;
+using BrilliantSkies.Core.Timing;
+using BrilliantSkies.Ftd.Planets;
+using BrilliantSkies.Ftd.Planets.Factions;
+using BrilliantSkies.Ftd.Planets.Instances;
+using BrilliantSkies.Ftd.Planets.Instances.Headers;
 using UnityEngine;
 
 namespace w0otness
 {
-	public class TournamentPlugin:FTDPlugin
+	public class TournamentPlugin:GamePlugin
 	{
 		static Tournament _t;
 		public void OnLoad()
 		{
 			//Debug.Log("Loading Tournament Stuff");
 			_t = new Tournament();
-			GameEvents.PlanetChange += OnPlanetChange;
+			GameEvents.UniverseChange += OnPlanetChange;
 			GameEvents.StartEvent += OnInstanceChange;
 		}
 		
@@ -30,7 +34,7 @@ namespace w0otness
 		}
 		
 		public Version version {
-			get { return new Version("0.0.9"); }
+			get { return new Version("2.2.12"); }
 		}
 		
 		public static void OnInstanceChange()
@@ -65,23 +69,23 @@ namespace w0otness
 			@is.GenerateBlankInstance();
 			Planet.i.Designers.AddInstance(@is);
 			var kid = FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
-				Name = "KING",
-				AbreviatedName = "KING",
+				Name = "King",
+				AbreviatedName = "K",
 				FleetColors = new Color[] {
-					new Color(255f / 255f, 215f / 255f, 0f / 255f, .5f),
-					new Color(218f / 255f, 165f / 255f, 32f / 255f, .5f),
-					new Color(255f / 255f, 165f / 255f, 0f / 255f, .5f),
-					new Color(218f / 255f, 140f / 255f, 0f / 255f, .5f)
+					new Color(1f, 0.84f, 0f, 0.75f),//gold
+					new Color(0.85f, 0.65f, 0.13f, 0.75f),//goldenrod
+					new Color(1f, 0.65f, 0f, 0.75f),//orange
+					new Color(0.85f, 0.55f, 0f, 0.75f)//brown-orange?
 				}
 			}).Id;
 			var cid = FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
-				Name = "CHAL",
-				AbreviatedName = "CHAL",
+				Name = "Challenger",
+				AbreviatedName = "C",
 				FleetColors = new Color[] {
-					new Color(255f / 255f, 0f / 255f, 0f / 255f, .5f),
-					new Color(139f / 255f, 0f / 255f, 0f / 255f, .5f),
-					new Color(178f / 255f, 34f / 255f, 34f / 255f, .5f),
-					new Color(255f / 255f, 99f / 255f, 71f / 255f, .5f)
+					new Color(1f, 0f, 0f, 0.75f),//red
+					new Color(0.55f, 0f, 0f, 0.75f),//dark red
+					new Color(0.7f, 0.13f, 0.13f, 0.75f),//fire brick
+					new Color(1f, 0.39f, 0.23f, 0.75f)//tomato
 				}
 			}).Id;
 			//Planet.i.Designers.GetInstance(@is.Header.Id).Factions.GetFaction(kid).eController = FactionController.None;

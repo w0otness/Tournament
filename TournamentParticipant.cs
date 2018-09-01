@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿using BrilliantSkies.Core.Id;
 namespace w0otness
 {
 	public class TournamentParticipant

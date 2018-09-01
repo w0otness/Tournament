@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-
 public class AprilFirst : Block, IDetonatable, IAlive, IBlock
 {
 	private bool _detonated;

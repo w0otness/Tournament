@@ -73,21 +73,155 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>includes\Assembly-CSharp.dll</HintPath>
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-UnityScript">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Assembly-UnityScript.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-UnityScript-firstpass">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Assembly-UnityScript-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Boo.Lang.dll</HintPath>
+    </Reference>
+    <Reference Include="Common">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Core">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Effects">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="Environments">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Environments.dll</HintPath>
+    </Reference>
+    <Reference Include="ES2">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\ES2.dll</HintPath>
+    </Reference>
+    <Reference Include="Ftd">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Ftd.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
     </Reference>
+    <Reference Include="Modding">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Modding.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Tds">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Mono.Data.Tds.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Mono.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MoodkieSecurity">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\MoodkieSecurity.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>includes\Newtonsoft.Json.dll</HintPath>
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PlayerProfiles">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\PlayerProfiles.dll</HintPath>
+    </Reference>
+    <Reference Include="Profiling">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Profiling.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>D:\Games\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\System.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
     </Reference>
+    <Reference Include="Ui">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Ui.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>includes\UnityEngine.dll</HintPath>
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StandardEvents">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StyleSheetsModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.StyleSheetsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WebModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.WebModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityScript.Lang">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityScript.Lang.dll</HintPath>
+    </Reference>
+    <Reference Include="Vectrosity">
+      <HintPath>D:\Steam Spiele\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Vectrosity.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />
