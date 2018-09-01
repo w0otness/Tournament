@@ -5,8 +5,6 @@ using BrilliantSkies.Core.Id;
 using BrilliantSkies.Ftd.Planets.Instances;
 using BrilliantSkies.Core.Types;
 using UnityEngine;
-using System.Collections.Generic;
-
 namespace w0otness
 {
 	public class TournamentEntry
@@ -14,8 +12,8 @@ namespace w0otness
 		public bool IsKing { get; set; }
 		public Tournament.SPAWN.DIR spawn_direction { get; set; }
 		public Tournament.SPAWN.LOC spawn_location { get; set; }
-		public ObjectId team_id { get; set; }
-		public float res { get; set; }
+		public ObjectId Team_id { get; set; }
+		public float Res { get; set; }
 		private BlueprintFile _bpf;
 		public BlueprintFile bpf {
 			get {
@@ -84,8 +82,8 @@ namespace w0otness
 		public void Spawn(float dis, float gap, int count, int pos)
 		{//TODO
 			MainConstruct mainConstruct = BlueprintConverter.Convert(bp);
-			team_id = IsKing ? InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "K").Id : InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "C").Id;
-			BlueprintConverter.Initiate(mainConstruct, new Vector3d(VLoc(gap, count, pos, dis)), VDir(), team_id, null, SpawnPositioning.OriginOrCentre);
+			Team_id = IsKing ? InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "K").Id : InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "C").Id;
+			BlueprintConverter.Initiate(mainConstruct, new Vector3d(VLoc(gap, count, pos, dis)), VDir(), Team_id, null, SpawnPositioning.OriginOrCentre);
 		}
 		
 		public Vector3 VLoc(float gap, int count, int pos, float dis)

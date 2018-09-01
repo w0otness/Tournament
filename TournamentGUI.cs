@@ -168,40 +168,11 @@ namespace w0otness
 			//GUILayout.Box(this._focus.entry_chal != null ? String.Format("<color=#ff0000ff>~---------T2---------~\n{3} {2}\n{0} {1}\n~-------SPAWNS-------~</color>{4}\n<color=#ff0000ff>~--------------------~</color>", this._focus.entry_chal.bpf.Name, this._focus.entry_chal.bp.CalculateResourceCost(false, true).Material, this._focus.entry_chal.spawn_location, this._focus.entry_chal.spawn_direction, tmpc) : "<color=#ff0000ff>~---------T2---------~</color>");
 			GUILayout.EndScrollView();
 			GUILayout.EndArea();
-			if (GUI.Button(new Rect(970f, 660f, 280f, 50f), "Start") && (_focus.entry_t1.Count > 0 && _focus.entry_t2.Count > 0)) {
-				//GameObject gameObject = new GameObject();
-				//gameObject.transform.position = CameraManager.GetSingleton().Position;
-				//AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-				//audioSource.clip = this._focus.audioClip;
-				//audioSource.Play();
-				//TimedObjectDestructor timedObjectDestructor = gameObject.AddComponent<TimedObjectDestructor>();
-				//timedObjectDestructor.timeOut = this._focus.audioClip.length + 2f;
+			if (GUI.Button(new Rect(970f, 660f, 280f, 50f), "Start") && _focus.entry_t1.Count > 0 && _focus.entry_t2.Count > 0) {
 				DeactivateGui();
 				_focus.StartMatch();
 			}
-			//		if (GUI.Button(new Rect(970f, 700f, 280f, 50f),"Boom!"))
-			//		{
-			//			
-			//		}
 		}
-
-		private void UpdateFileData(BlueprintFile file)
-		{
-			//preview window?
-			//		if (file == null)
-			//		{
-			//			//this._resourceCosts = null;
-			//		}
-			//		else
-			//		{
-			//			//Logger.Log("load bp start");
-			//			//Blueprint blueprint = file.Load(true);
-			//			//this._resourceCosts = blueprint.CalculateResourceCost(false, true);
-			//			//DesignViewer component = (UnityEngine.Object.Instantiate(StaticInstantiables.designViewer.Get()) as GameObject).GetComponent<DesignViewer>();
-			//			//component.View(blueprint);
-			//			//BlockViewer.GetSingleton().BeginDisplay(component.transform, new Rect(0f, 0f, 640f, 800f), () => this.MenuActive);
-			//			//Logger.Log("load bp end");
-			//		}
-		}
+		private void UpdateFileData(BlueprintFile file) {}
 	}
 }

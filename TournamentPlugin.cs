@@ -1,4 +1,5 @@
 ﻿using System;
+using BrilliantSkies.Core;
 using BrilliantSkies.Core.Modding;
 using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Ftd.Planets;
@@ -9,21 +10,18 @@ using UnityEngine;
 
 namespace w0otness
 {
-	public class TournamentPlugin:GamePlugin
+	public class TournamentPlugin : GamePlugin
 	{
 		static Tournament _t;
 		public void OnLoad()
 		{
-			//Debug.Log("Loading Tournament Stuff");
+			SafeLogging.Log("Loading Tournament Stuff");
 			_t = new Tournament();
 			GameEvents.UniverseChange += OnPlanetChange;
 			GameEvents.StartEvent += OnInstanceChange;
 		}
-		
-		public void OnSave()
-		{
-			
-		}
+
+		public void OnSave() { }
 		
 		public string name {
 			get { return "Tournament"; }
@@ -34,17 +32,18 @@ namespace w0otness
 		}
 		
 		public Version version {
-			get { return new Version("2.2.12"); }
+			get { return new Version("2.2.14"); }
 		}
 		
 		public static void OnInstanceChange()
 		{
-			//Debug.Log("TEST1 "+InstanceSpecification.i.Header.Name);
 			GameEvents.Twice_Second -= _t._me.SlowUpdate;
 			GameEvents.FixedUpdateEvent -= _t._me.FixedUpdate;
+			GameEvents.LateUpdate -= _t._me.LateUpdate;
 			GameEvents.OnGui -= _t._me.OnGUI;
 			if (@is.Header.Name == InstanceSpecification.i.Header.Name) {
 				_t._me._GUI.ActivateGui(_t._me);
+				SafeLogging.Log("Avatar is "+InstanceSpecification.i.Header.CommonSettings.AvatarAvailability.ToString());
 			}
 		}
 		
@@ -55,7 +54,9 @@ namespace w0otness
 			@is = new InstanceSpecification();
 			@is.Header.Name = "Tournament Creator";
 			@is.Header.Summary = "Create custom tournament style matches.";
-			@is.Header.Type = InstanceType.Designer;
+			@is.Header.Type = InstanceType.None;
+			@is.Header.CommonSettings.AvatarAvailability = AvatarAvailability.None;
+			@is.Header.CommonSettings.AvatarDamage = AvatarDamage.Off;
 			@is.Header.CommonSettings.ConstructableCleanUp = ConstructableCleanUp.Off;
 			@is.Header.CommonSettings.HeartStoneRequirement = HeartStoneRequirement.None;
 			@is.Header.CommonSettings.BuildModeRules = BuildModeRules.Disabled;
@@ -66,9 +67,8 @@ namespace w0otness
 			@is.Header.CommonSettings.FogOfWarType = FogOfWarType.None;
 			@is.Header.CommonSettings.DesignerOptions = DesignerOptions.Off;
 			@is.Header.CommonSettings.LuckyMechanic = LuckyMechanic.Off;
-			@is.GenerateBlankInstance();
-			Planet.i.Designers.AddInstance(@is);
-			var kid = FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
+			@is.Header.CommonSettings.WarpAbility = WarpAbility.Off;
+			FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
 				Name = "King",
 				AbreviatedName = "K",
 				FleetColors = new Color[] {
@@ -77,8 +77,8 @@ namespace w0otness
 					new Color(1f, 0.65f, 0f, 0.75f),//orange
 					new Color(0.85f, 0.55f, 0f, 0.75f)//brown-orange?
 				}
-			}).Id;
-			var cid = FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
+			});
+			FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
 				Name = "Challenger",
 				AbreviatedName = "C",
 				FleetColors = new Color[] {
@@ -87,9 +87,8 @@ namespace w0otness
 					new Color(0.7f, 0.13f, 0.13f, 0.75f),//fire brick
 					new Color(1f, 0.39f, 0.23f, 0.75f)//tomato
 				}
-			}).Id;
-			//Planet.i.Designers.GetInstance(@is.Header.Id).Factions.GetFaction(kid).eController = FactionController.None;
-			//Planet.i.Designers.GetInstance(@is.Header.Id).Factions.GetFaction(cid).eController = FactionController.AI_General;
+			});
+			Planet.i.Designers.AddInstance(@is);
 		}
 	}
 }

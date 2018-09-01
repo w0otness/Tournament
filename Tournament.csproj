@@ -51,7 +51,6 @@
     <OutputPath>..\..\Mods\Tournament</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="AprilFirst.cs" />
     <Compile Include="Tournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TournamentEntry.cs" />
