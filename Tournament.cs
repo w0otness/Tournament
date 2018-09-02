@@ -95,16 +95,11 @@ namespace w0otness
 
 		private SortedDictionary<int,SortedDictionary<int,TournamentParticipant>> HUDLog = new SortedDictionary<int,SortedDictionary<int,TournamentParticipant>>();
 
-		//public TournamentEntry entry_king;
-		//public TournamentEntry entry_chal;
-
 		public float t1_res;
 		public float t2_res;
 
 		public List<TournamentEntry> entry_t1 = new List<TournamentEntry>();
 		public List<TournamentEntry> entry_t2 = new List<TournamentEntry>();
-
-		//public AudioClip audioClip;
 
 		private GameObject justOrbitCam;
 		private MouseLook flycam;
@@ -113,17 +108,8 @@ namespace w0otness
 		public Tournament()
 		{
 			_me = this;
-			//var gui = new InstantGui();
 			_GUI = new TournamentGUI();
 
-
-			//(Font)Resources.Load("LiberationMono-Regular.ttf");
-			//Debug.developerConsoleVisible = true;
-			//			var f = new WWW("file:///"+StaticPaths.GetAssetFileNameForMod("Tournament", "LiberationMono-Regular.ttf"));
-			//			while (!f.isDone) {}
-			//			_Font = f;
-			//_Font = Resources.Load("Assets/LiberationMono-Regular") as Font;
-			//Debug.Log(_Font.name);
 			_Top = new GUIStyle(LazyLoader.HUD.Get().interactionStyle) {
 				alignment = TextAnchor.MiddleCenter,
 				richText = true,
@@ -147,13 +133,6 @@ namespace w0otness
 				wordWrap = false,
 				clipping = TextClipping.Clip
 			};
-
-			//audioClip = (AudioClip)new WWW("file:///"+StaticPaths.GetAssetFileNameForMod("Tournament", "boom.ogg")).assetBundle.mainAsset;
-			//WWW wWW = new WWW("file:///"+StaticPaths.GetAssetFileNameForMod("Tournament", "boom.ogg"));
-			//Debug.Log("file:///"+StaticPaths.GetAssetFileNameForMod("Tournament", "boom.ogg"));
-			//while (!wWW.isDone) {
-			//}
-			//audioClip = wWW.GetAudioClip(true);
 		}
 
 		public void StartMatch()
@@ -161,13 +140,6 @@ namespace w0otness
 			ClearArea();
 			
 			InstanceSpecification.i.Header.CommonSettings.EnemyBlockDestroyedResourceDrop = matconv / 100;
-
-			//entry_king.Spawn(spawndis);
-			//entry_king.team_id.FactionInst.ResourceStore.SetResources(maxmat);
-			//entry_king.res = maxmat;
-			//entry_chal.Spawn(spawndis);
-			//entry_chal.team_id.FactionInst.ResourceStore.SetResources(maxmat);
-			//entry_chal.res = maxmat;
 
 			t1_res = maxmat;
 			foreach (TournamentEntry tp in entry_t1) {
@@ -227,7 +199,7 @@ namespace w0otness
 			GameEvents.Twice_Second += SlowUpdate;
 			GameEvents.FixedUpdateEvent += FixedUpdate;
 			GameEvents.OnGui += OnGUI;
-			GameEvents.LateUpdate += LateUpdate;
+			GameEvents.PreLateUpdate += LateUpdate;
 			Time.timeScale = 0f;
 			ResetCam();
 		}
@@ -272,7 +244,6 @@ namespace w0otness
 				float teamhp = 0;
 				float teamhpmax = 0;
 				foreach (KeyValuePair<int,TournamentParticipant> member in team.Value) { //foreach member in team
-					//GUI.color = new Color(1f, 0f, 0f, 1f);
 					if (!member.Value.Disqual && !member.Value.Scrapping && (penaltynoai && member.Value.AICount != 0)) {
 						teamhp += member.Value.HPCUR;
 						teamhpmax += member.Value.HPMAX;
@@ -408,18 +379,19 @@ namespace w0otness
 			float axis = Input.GetAxis("Mouse ScrollWheel");
 			bool shiftPressed = Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift);
 			orbitcam.distance -= axis * (shiftPressed ? 200 : 50);
-			orbitIndex %= StaticConstructablesManager.constructables.Count;
+			int count = StaticConstructablesManager.constructables.Count;
+			orbitIndex %= count;
 			orbitcam.xSpeed = (shiftPressed ? 1000 : 250);
 			orbitcam.ySpeed = (shiftPressed ? 480 : 120);
 			if (Input.GetKeyUp(ftdKeyMap.GetKeyDef(KeyInputsFtd.PauseGame).Key)) {//Default Pause-Key is F11.
 				Time.timeScale = (Time.timeScale > 0 ? 0 : 1);
 			}
 			if (Input.GetKeyUp(ftdKeyMap.GetKeyDef(KeyInputsFtd.InventoryUi).Key)) {//Default Inventory-Key is E.
-				orbitIndex = (orbitIndex + 1) % StaticConstructablesManager.constructables.Count;
+				orbitIndex = (orbitIndex + 1) % count;
 			}
 			if (Input.GetKeyUp(ftdKeyMap.GetKeyDef(KeyInputsFtd.Interact).Key)) {//Default Interaction-Key is Q.
 				if (orbitIndex == 0) {
-					orbitIndex = StaticConstructablesManager.constructables.Count;
+					orbitIndex = count;
 				}
 				orbitIndex--;
 			}

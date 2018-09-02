@@ -33,18 +33,16 @@ namespace w0otness
 					if (num > 0) {
 						var s = new string[num + 1];
 						float smax = 0;
-						//float scur = 0;
 						for (int i = 0; i < num; i++) {
 							float max = scs[i].CalculateResourceCost(false, true).Material;
 							s[i + 1] = String.Format("{0} <color=cyan>{1}</color>", scs[i].blueprintName, max);
 							smax += max;
-							//scur+=cur;
 						}
-						s[0] = String.Format("{0} <color=cyan>{1}</color>", bp.blueprintName, bp.CalculateResourceCost(false, true).Material - smax);
+						s[0] = string.Format("{0} <color=cyan>{1}</color>", bp.blueprintName, bp.CalculateResourceCost(false, true).Material - smax);
 						return s;
 					} else {
 						var s = new string[1];
-						s[0] = String.Format("{0} <color=cyan>{1}</color>", bp.blueprintName, bp.CalculateResourceCost(false, true).Material);
+						s[0] = string.Format("{0} <color=cyan>{1}</color>", bp.blueprintName, bp.CalculateResourceCost(false, true).Material);
 						return s;
 					}
 				}
@@ -80,7 +78,7 @@ namespace w0otness
 		}
 
 		public void Spawn(float dis, float gap, int count, int pos)
-		{//TODO
+		{
 			MainConstruct mainConstruct = BlueprintConverter.Convert(bp);
 			Team_id = IsKing ? InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "K").Id : InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "C").Id;
 			BlueprintConverter.Initiate(mainConstruct, new Vector3d(VLoc(gap, count, pos, dis)), VDir(), Team_id, null, SpawnPositioning.OriginOrCentre);

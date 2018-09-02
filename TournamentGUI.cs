@@ -91,12 +91,6 @@ namespace w0otness
 						bpf = _treeSelector.CurrentData
 					};
 					_focus.entry_t1.Add(tmp);
-
-					//this._focus.entry_king = new TournamentEntry();
-					//this._focus.entry_king.IsKing = true;
-					//this._focus.entry_king.spawn_direction = (Tournament.SPAWN.DIR)Dir;
-					//this._focus.entry_king.spawn_location = (Tournament.SPAWN.LOC)Loc;
-					//this._focus.entry_king.bpf = this._treeSelector.CurrentData;
 				}
 				if (GUI.Button(new Rect(600f, 100f, 280f, 50f), "Add to Team 2")) {
 					GUISoundManager.GetSingleton().PlayBeep();
@@ -107,25 +101,11 @@ namespace w0otness
 						bpf = _treeSelector.CurrentData
 					};
 					_focus.entry_t2.Add(tmp);
-
-					//this._focus.entry_chal = new TournamentEntry();
-					//this._focus.entry_chal.IsKing = false;
-					//this._focus.entry_chal.spawn_direction = (Tournament.SPAWN.DIR)Dir;
-					//this._focus.entry_chal.spawn_location = (Tournament.SPAWN.LOC)Loc;
-					//this._focus.entry_chal.bpf = this._treeSelector.CurrentData;
 				}
 			}
 			GUILayout.EndArea();
 			GUILayout.BeginArea(new Rect(940f, 0f, 340f, 580f), "Selected", GUI.skin.window);
 			listpos = GUILayout.BeginScrollView(listpos);
-			//var tmpk = "";
-			//if (this._focus.entry_king != null)
-			//{
-			//    foreach (var s in this._focus.entry_king.labelCost)
-			//    {
-			//        tmpk += "\n" + s;
-			//    }
-			//}
 
 			GUILayout.Box("<color=#ffa500ff>~---------T1---------~</color>");
 			if (_focus.entry_t1.Count != 0) {
@@ -155,17 +135,6 @@ namespace w0otness
 				}
 			}
 			
-			//GUILayout.Box(this._focus.entry_king != null ? String.Format("<color=#ffa500ff>~--------KING--------~\n{3} {2}\n{0} {1}\n~-------SPAWNS-------~</color>{4}\n<color=#ffa500ff>~--------------------~</color>",this._focus.entry_king.bpf.Name,this._focus.entry_king.bp.CalculateResourceCost(false,true).Material,this._focus.entry_king.spawn_location,this._focus.entry_king.spawn_direction,tmpk) : "<color=#ffa500ff>~--------KING--------~</color>");
-
-			//var tmpc = "";
-			//if (this._focus.entry_chal != null)
-			//{
-			//    foreach (var s in this._focus.entry_chal.labelCost)
-			//    {
-			//        tmpc += "\n" + s;
-			//    }
-			//}
-			//GUILayout.Box(this._focus.entry_chal != null ? String.Format("<color=#ff0000ff>~---------T2---------~\n{3} {2}\n{0} {1}\n~-------SPAWNS-------~</color>{4}\n<color=#ff0000ff>~--------------------~</color>", this._focus.entry_chal.bpf.Name, this._focus.entry_chal.bp.CalculateResourceCost(false, true).Material, this._focus.entry_chal.spawn_location, this._focus.entry_chal.spawn_direction, tmpc) : "<color=#ff0000ff>~---------T2---------~</color>");
 			GUILayout.EndScrollView();
 			GUILayout.EndArea();
 			if (GUI.Button(new Rect(970f, 660f, 280f, 50f), "Start") && _focus.entry_t1.Count > 0 && _focus.entry_t2.Count > 0) {
