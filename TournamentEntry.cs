@@ -15,17 +15,17 @@ namespace w0otness
 		public ObjectId Team_id { get; set; }
 		public float Res { get; set; }
 		private BlueprintFile _bpf;
-		public BlueprintFile bpf {
+		public BlueprintFile Bpf {
 			get {
 				return _bpf;
 			}
 			set {
 				_bpf = value;
-				bp = bpf.Load();
+				bp = Bpf.Load();
 			}
 		}
 		public Blueprint bp;
-		public string[] labelCost {
+		public string[] LabelCost {
 			get {
 				if (bp != null) {
 					var scs = bp.SCs.FindAll(x => !x.IsSubConstructable());
@@ -49,7 +49,7 @@ namespace w0otness
 				return null;
 			}
 		}
-		public string[] label {
+		public string[] Label {
 			get {
 				if (bp != null) {
 					var scs = bp.SCs.FindAll(x => !x.IsSubConstructable());
@@ -79,7 +79,7 @@ namespace w0otness
 
 		public void Spawn(float dis, float gap, int count, int pos)
 		{
-			MainConstruct mainConstruct = BlueprintConverter.Convert(bp);
+			MainConstruct mainConstruct = BlueprintConverter.Convert(bp, ConversionDamageMode.IgnoreDamage, false);
 			Team_id = IsKing ? InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "K").Id : InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "C").Id;
 			BlueprintConverter.Initiate(mainConstruct, new Vector3d(VLoc(gap, count, pos, dis)), VDir(), Team_id, null, SpawnPositioning.OriginOrCentre);
 		}
@@ -88,15 +88,15 @@ namespace w0otness
 		{
 			switch (spawn_location) {
 				case Tournament.SPAWN.LOC.Sea:
-					return new Vector3((count - 1 * gap) / 2 - (pos * gap), 0, IsKing ? dis / 2 : dis / 2 - dis);
+					return new Vector3((count - 1) * gap / 2 - (pos * gap), 0, IsKing ? dis / 2 : dis / 2 - dis);
 				case Tournament.SPAWN.LOC.Air:
-					return new Vector3((count - 1 * gap) / 2 - (pos * gap), 50, IsKing ? dis / 2 : dis / 2 - dis);
+					return new Vector3((count - 1) * gap / 2 - (pos * gap), 50, IsKing ? dis / 2 : dis / 2 - dis);
 				case Tournament.SPAWN.LOC.Sub:
-					return new Vector3((count - 1 * gap) / 2 - (pos * gap), -10, IsKing ? dis / 2 : dis / 2 - dis);
+					return new Vector3((count - 1) * gap / 2 - (pos * gap), -10, IsKing ? dis / 2 : dis / 2 - dis);
 				case Tournament.SPAWN.LOC.Land:
-					return new Vector3((count - 1 * gap) / 2 - (pos * gap), 51, IsKing ? dis / 2 : dis / 2 - dis);
+					return new Vector3((count - 1) * gap / 2 - (pos * gap), 51, IsKing ? dis / 2 : dis / 2 - dis);
 			}
-			return new Vector3((count - 1 * gap) / 2 - (pos * gap), 0, IsKing ? 500 : -500);
+			return new Vector3((count - 1) * gap / 2 - (pos * gap), 0, IsKing ? 500 : -500);
 		}
 		
 		public Quaternion VDir()

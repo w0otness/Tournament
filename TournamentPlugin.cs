@@ -37,12 +37,12 @@ namespace w0otness
 		
 		public static void OnInstanceChange()
 		{
-			GameEvents.Twice_Second -= _t._me.SlowUpdate;
-			GameEvents.FixedUpdateEvent -= _t._me.FixedUpdate;
-			GameEvents.PreLateUpdate -= _t._me.PreLateUpdate;
-			GameEvents.OnGui -= _t._me.OnGUI;
+			GameEvents.Twice_Second -= _t.SlowUpdate;
+			GameEvents.FixedUpdateEvent -= _t.FixedUpdate;
+			GameEvents.PreLateUpdate -= _t.PreLateUpdate;
+			GameEvents.OnGui -= _t.OnGUI;
 			if (@is.Header.Name == InstanceSpecification.i.Header.Name) {
-				_t._me._GUI.ActivateGui(_t._me);
+				_t._GUI.ActivateGui(_t);
 				SafeLogging.Log("Avatar is "+InstanceSpecification.i.Header.CommonSettings.AvatarAvailability.ToString());
 			}
 		}

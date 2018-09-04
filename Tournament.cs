@@ -13,6 +13,7 @@ using BrilliantSkies.Effects.Cameras;
 using BrilliantSkies.Core.Returns.PositionAndRotation;
 using BrilliantSkies.Core.UniverseRepresentation.Positioning.Frames.Points;
 using BrilliantSkies.Core.Types;
+using BrilliantSkies.Ftd.Planets.World;
 using BrilliantSkies.Ftd.Planets;
 
 namespace w0otness
@@ -63,7 +64,7 @@ namespace w0otness
 			}
 		}
 
-		public Tournament _me;
+		public static Tournament _me;
 
 		public TournamentGUI _GUI;
 		public Font _Font;
@@ -89,6 +90,8 @@ namespace w0otness
 		public float spawndis = 1000;
 		public float spawngap = 100;
 		public float penaltyhp = 50;
+		public int northSouthBoard = 0;
+		public int eastWestBoard = 0;
 
 		/// <summary>
 		/// If true, the standard rules for despawning will be used.
@@ -137,6 +140,10 @@ namespace w0otness
 				wordWrap = false,
 				clipping = TextClipping.Clip
 			};
+		}
+
+		public Vector3d getBoardOffset() {
+			return StaticCoordTransforms.BoardSectionToUniversalPosition(WorldSpecification.i.BoardLayout.BoardSections[eastWestBoard, northSouthBoard].BoardSectionCoords);
 		}
 
 		public void StartMatch()
@@ -204,6 +211,7 @@ namespace w0otness
 			GameEvents.FixedUpdateEvent += FixedUpdate;
 			GameEvents.OnGui += OnGUI;
 			GameEvents.PreLateUpdate += PreLateUpdate;
+			GameEvents.UpdateEvent -= UpdateBoardSectionPreview;
 			Time.timeScale = 0f;
 			orbitID = StaticConstructablesManager.constructables[0].UniqueId;
 			lastCount = StaticConstructablesManager.constructables.Count;
@@ -222,12 +230,10 @@ namespace w0otness
 				UnityEngine.Object.Destroy(current.gameObject);
 			}
 			justOrbitCam=R_Avatars.JustOrbitCamera.InstantiateACopy().gameObject;
-			justOrbitCam.transform.position = new Vector3(-500, 50, 0);
+			justOrbitCam.transform.position = new Vector3(0, 50, 0);
 			justOrbitCam.transform.rotation = Quaternion.LookRotation(Vector3.right, Vector3.up);
 			flycam = justOrbitCam.AddComponent<MouseLook>();
 			flycam.enabled = true;
-			flycam.transform.position = new Vector3(-500, 50, 0);
-			flycam.transform.rotation = Quaternion.LookRotation(Vector3.right, Vector3.up);
 			orbitcam = justOrbitCam.GetComponent<MouseOrbit>();
 			orbitcam.enabled = false;
 			orbitcam.distance = 100;
@@ -288,7 +294,7 @@ namespace w0otness
 				}
 			}
 		}
-
+		#region Updates
 		public void FixedUpdate(ITimeStep dt)
 		{
 			if (Time.timeScale != 0) { //dont calc when paused....
@@ -378,6 +384,13 @@ namespace w0otness
 				overtime = true;
 			}
 		}
+
+		public void UpdateBoardSectionPreview(ITimeStep dt) {
+			//Vector3d currentBoard = getBoardOffset();
+			//justOrbitCam.transform.position = currentBoard.ToSingle() + new Vector3(0, 50, 0);
+			justOrbitCam.transform.Rotate(0, (float)(15 * dt.PhysicalDeltaTime.Seconds), 0);//15° pro vergangene Sekunde
+		}
+
 		public void PreLateUpdate()
 		{
 			FtdKeyMap ftdKeyMap = ProfileManager.Instance.GetModule<FtdKeyMap>();
@@ -425,7 +438,6 @@ namespace w0otness
 				if (count == 0) {//Alle tot!
 					flycam.enabled = true;
 					orbitcam.enabled = false;
-					flycam.transform.rotation = orbitcam.transform.rotation;
 				} else {
 					MainConstruct currentConstruct = StaticConstructablesManager.constructables[orbitIndex];
 					orbitID = currentConstruct.UniqueId;
@@ -433,5 +445,6 @@ namespace w0otness
 				}
 			}
 		}
+		#endregion
 	}
 }
