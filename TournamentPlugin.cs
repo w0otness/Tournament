@@ -32,7 +32,7 @@ namespace w0otness
 		}
 		
 		public Version version {
-			get { return new Version("2.2.14"); }
+			get { return new Version(2,2,16); }
 		}
 		
 		public static void OnInstanceChange()
