@@ -41,8 +41,8 @@ namespace w0otness
 		{
 			_Style = LazyLoader.LoadVehicle.Get();
 			BlueprintFolder combinedBlueprintFolder = GameFolders.GetCombinedBlueprintFolder();
-			//sectionsNorthSouth = WorldSpecification.i.BoardLayout.NorthSouthBoardSectionCount - 1;
-			//sectionsEastWest = WorldSpecification.i.BoardLayout.EastWestBoardSectionCount - 1;
+			sectionsNorthSouth = WorldSpecification.i.BoardLayout.NorthSouthBoardSectionCount - 1;
+			sectionsEastWest = WorldSpecification.i.BoardLayout.EastWestBoardSectionCount - 1;
 			_treeSelector = FtdGuiUtils.GetFileBrowserFor(combinedBlueprintFolder);
 			_treeSelector.Refresh();
 			_focus.ResetCam();

@@ -43,7 +43,6 @@ namespace w0otness
 			GameEvents.OnGui -= _t.OnGUI;
 			if (@is.Header.Name == InstanceSpecification.i.Header.Name) {
 				_t._GUI.ActivateGui(_t);
-				SafeLogging.Log("Avatar is "+InstanceSpecification.i.Header.CommonSettings.AvatarAvailability.ToString());
 			}
 		}
 		
