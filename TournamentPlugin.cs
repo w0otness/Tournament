@@ -39,7 +39,7 @@ namespace w0otness
 		{
 			GameEvents.Twice_Second -= _t._me.SlowUpdate;
 			GameEvents.FixedUpdateEvent -= _t._me.FixedUpdate;
-			GameEvents.PreLateUpdate -= _t._me.LateUpdate;
+			GameEvents.PreLateUpdate -= _t._me.PreLateUpdate;
 			GameEvents.OnGui -= _t._me.OnGUI;
 			if (@is.Header.Name == InstanceSpecification.i.Header.Name) {
 				_t._me._GUI.ActivateGui(_t._me);

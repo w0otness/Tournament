@@ -58,7 +58,8 @@ namespace w0otness
 			public enum HPMODE
 			{
 				ResourceHP,
-				StandardHP
+				StandardHP/*,
+				ArrayHP*/
 			}
 		}
 
@@ -74,6 +75,8 @@ namespace w0otness
 		private float timerTotal2 = 0;
 		private bool overtime = false;
 		private int orbitIndex = 0;
+		private int orbitID = -1;
+		private int lastCount = -1;
 
 		public float minalt = -50;
 		public float maxalt = 500;
@@ -178,7 +181,7 @@ namespace w0otness
 						UniqueId = current.UniqueId,
 						BlueprintName = current.GetBlueprintName(),
 						AICount = current.BlockTypeStorage.MainframeStore.Blocks.Count,
-						HP = current.BlockTypeStorage.MainframeStore.Blocks.Count > 0 ? current.iMainStatus.GetFractionAliveBlocksIncludingSubConstructables() * 100 : current.iMainStatus.GetFractionAliveBlocks() * 100,
+						HP = 100,
 						HPCUR = current.BlockTypeStorage.MainframeStore.Blocks.Count > 0 ? current.iMainStatus.GetNumberAliveBlocksIncludingSubConstructables() : current.iMainStatus.GetNumberAliveBlocks(),
 						HPMAX = current.BlockTypeStorage.MainframeStore.Blocks.Count > 0 ? current.iMainStatus.GetNumberBlocksIncludingSubConstructables() : current.iMainStatus.GetNumberBlocks()
 					});
@@ -192,16 +195,18 @@ namespace w0otness
 						BlueprintName = current.GetBlueprintName(),
 						AICount = current.BlockTypeStorage.MainframeStore.Blocks.Count,
 						HP = 100,
-						HPCUR = current.iResourceCosts.CalculateResourceCostOfAliveBlocksIncludingSubConstructs_ForCashBack(true).Material,
-						HPMAX =	current.iResourceCosts.CalculateResourceCostOfAliveBlocksIncludingSubConstructs_ForCashBack(true).Material
+						HPCUR = current.BlockTypeStorage.MainframeStore.Blocks.Count > 0 ? current.iResourceCosts.CalculateResourceCostOfAliveBlocksIncludingSubConstructs_ForCashBack(true).Material : current.iResourceCosts.GetResourceCostAllNotIncludingSubVehicles().Material,
+						HPMAX = current.BlockTypeStorage.MainframeStore.Blocks.Count > 0 ? current.iResourceCosts.CalculateResourceCostOfAliveBlocksIncludingSubConstructs_ForCashBack(true).Material : current.iResourceCosts.GetResourceCostAllNotIncludingSubVehicles().Material
 					});
 				}
 			}
 			GameEvents.Twice_Second += SlowUpdate;
 			GameEvents.FixedUpdateEvent += FixedUpdate;
 			GameEvents.OnGui += OnGUI;
-			GameEvents.PreLateUpdate += LateUpdate;
+			GameEvents.PreLateUpdate += PreLateUpdate;
 			Time.timeScale = 0f;
+			orbitID = StaticConstructablesManager.constructables[0].UniqueId;
+			lastCount = StaticConstructablesManager.constructables.Count;
 			ResetCam();
 		}
 
@@ -373,7 +378,7 @@ namespace w0otness
 				overtime = true;
 			}
 		}
-		public void LateUpdate()
+		public void PreLateUpdate()
 		{
 			FtdKeyMap ftdKeyMap = ProfileManager.Instance.GetModule<FtdKeyMap>();
 			
@@ -381,7 +386,16 @@ namespace w0otness
 			bool shiftPressed = Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift);
 			orbitcam.distance -= axis * (shiftPressed ? 200 : 50);
 			int count = StaticConstructablesManager.constructables.Count;
-			orbitIndex %= count;
+			if (lastCount > count) {//Ein Teilnehmer ist von uns gegangen.
+				lastCount = count;
+				int foundIt = StaticConstructablesManager.constructables.FindIndex((mc) => mc.UniqueId == orbitID);
+				if (foundIt == -1) {//Das aktuelle Ziel der Orbitkamera wurde zerstört.
+					orbitIndex %= count;
+				} else {
+					orbitIndex = foundIt;
+				}
+			}
+
 			orbitcam.xSpeed = (shiftPressed ? 1000 : 250);
 			orbitcam.ySpeed = (shiftPressed ? 480 : 120);
 			if (Input.GetKeyUp(ftdKeyMap.GetKeyDef(KeyInputsFtd.PauseGame).Key)) {//Default Pause-Key is F11.
@@ -396,7 +410,7 @@ namespace w0otness
 				}
 				orbitIndex--;
 			}
-			if (Input.GetMouseButtonUp(0)) {//Linke Maustaste
+			if (Input.GetMouseButtonUp(0)&&count!=0) {//Linke Maustaste und mindestens noch einer da
 				flycam.enabled = false;
 				orbitcam.enabled = true;
 			} else if (Input.GetMouseButtonUp(1)) {//Rechte Maustaste
@@ -407,10 +421,16 @@ namespace w0otness
 			if (flycam.enabled) {
 				Vector3 movement = ftdKeyMap.GetMovemementDirection() * (shiftPressed ? 5 : 1);
 				flycam.transform.position += flycam.transform.localRotation * movement;
-			}
-			if (orbitcam.enabled) {
-				MainConstruct currentConstruct = StaticConstructablesManager.constructables[orbitIndex];
-				orbitcam.OrbitTarget = new PositionAndRotationReturnUniverseCoord(new UniversalTransform(new Vector3d(currentConstruct.CentreOfMass), currentConstruct.SafeRotation));
+			} else if (orbitcam.enabled) {
+				if (count == 0) {//Alle tot!
+					flycam.enabled = true;
+					orbitcam.enabled = false;
+					flycam.transform.rotation = orbitcam.transform.rotation;
+				} else {
+					MainConstruct currentConstruct = StaticConstructablesManager.constructables[orbitIndex];
+					orbitID = currentConstruct.UniqueId;
+					orbitcam.OrbitTarget = new PositionAndRotationReturnUniverseCoord(new UniversalTransform(new Vector3d(currentConstruct.CentreOfMass), currentConstruct.SafeRotation));
+				}
 			}
 		}
 	}
