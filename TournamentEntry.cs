@@ -3,8 +3,10 @@ using Assets.Scripts;
 using Assets.Scripts.Persistence;
 using BrilliantSkies.Core.Id;
 using BrilliantSkies.Ftd.Planets.Instances;
-using BrilliantSkies.Core.Types;
+using BrilliantSkies.Ftd.Planets;
 using UnityEngine;
+using BrilliantSkies.Core.UniverseRepresentation;
+
 namespace w0otness
 {
 	public class TournamentEntry
@@ -81,7 +83,7 @@ namespace w0otness
 		{
 			MainConstruct mainConstruct = BlueprintConverter.Convert(bp, ConversionDamageMode.IgnoreDamage, false);
 			Team_id = IsKing ? InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "K").Id : InstanceSpecification.i.Factions.Factions.Find(f => f.FactionSpec.AbreviatedName == "C").Id;
-			BlueprintConverter.Initiate(mainConstruct, new Vector3d(VLoc(gap, count, pos, dis)), VDir(), Team_id, null, SpawnPositioning.OriginOrCentre);
+			BlueprintConverter.Initiate(mainConstruct, PlanetList.MainFrame.FramePositionToUniversalPosition(VLoc(gap, count, pos, dis)), VDir(), Team_id, null, SpawnPositioning.OriginOrCentre);
 		}
 		
 		public Vector3 VLoc(float gap, int count, int pos, float dis)

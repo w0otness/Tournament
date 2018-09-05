@@ -71,8 +71,9 @@ namespace w0otness
 			_focus.maxcost = GUISliders.LayoutDisplaySlider("Max Design Cost", _focus.maxcost, 0f, 10000000f, enumMinMax.none, new ToolTip("Max design cost, Currently doesn't effect anything"));
 			_focus.maxmat = GUISliders.LayoutDisplaySlider("Starting Material", _focus.maxmat, 0f, 100000f, enumMinMax.none, new ToolTip("Amount of material per team (centralised)"));
 			_focus.matconv = GUISliders.LayoutDisplaySlider("Dmg to Mat %", _focus.matconv, -1f, 100f, enumMinMax.none, new ToolTip("Damage to material conversion, -1 disables self/team damage material return"));
-			//_focus.northSouthBoard = (int)GUISliders.LayoutDisplaySlider("N-S Board", _focus.northSouthBoard, 0, sectionsNorthSouth, enumMinMax.none, new ToolTip("The north-south boardindex, 0 is the bottom side"));
-			//_focus.eastWestBoard = (int)GUISliders.LayoutDisplaySlider("E-W Board", _focus.eastWestBoard, 0, sectionsEastWest, enumMinMax.none, new ToolTip("The east-west boardindex, 0 is the left side"));
+			_focus.eastWestBoard = (int)GUISliders.LayoutDisplaySlider("E-W Board", _focus.eastWestBoard, 0, sectionsEastWest, enumMinMax.none, new ToolTip("The east-west boardindex, it is the first number on the map. 0 is the left side"));
+			_focus.northSouthBoard = (int)GUISliders.LayoutDisplaySlider("N-S Board", _focus.northSouthBoard, 0, sectionsNorthSouth, enumMinMax.none, new ToolTip("The north-south boardindex, it is the second number on the map. 0 is the bottom side."));
+			_focus.MoveCam();
 			_focus.srules = Convert.ToBoolean(GUISliders.LayoutDisplaySlider(((Tournament.OPTIONS.STANDARDRULES)Convert.ToInt32(_focus.srules)).ToString(), Convert.ToInt32(_focus.srules), 0f, 1f, enumMinMax.none, new ToolTip("Standard despawn rules, or customise")));
 			if (!_focus.srules) {
 				_focus.penaltynoai = Convert.ToBoolean(GUISliders.LayoutDisplaySlider(((Tournament.OPTIONS.AIPENALTY)Convert.ToInt32(_focus.penaltynoai)).ToString(), Convert.ToInt32(_focus.penaltynoai), 0f, 1f, enumMinMax.none, new ToolTip("Does having no AI left add to penalty time?")));

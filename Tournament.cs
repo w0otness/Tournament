@@ -15,6 +15,8 @@ using BrilliantSkies.Core.UniverseRepresentation.Positioning.Frames.Points;
 using BrilliantSkies.Core.Types;
 using BrilliantSkies.Ftd.Planets.World;
 using BrilliantSkies.Ftd.Planets;
+using BrilliantSkies.Game;
+using BrilliantSkies.Core.UniverseRepresentation;
 
 namespace w0otness
 {
@@ -125,7 +127,6 @@ namespace w0otness
 
 			_Left = new GUIStyle(LazyLoader.HUD.Get().interactionStyle) {
 				alignment = TextAnchor.UpperLeft,
-				//font =_Font;
 				richText = true,
 				fontSize = 12,
 				wordWrap = false,
@@ -134,16 +135,11 @@ namespace w0otness
 
 			_Right = new GUIStyle(LazyLoader.HUD.Get().interactionStyle) {
 				alignment = TextAnchor.UpperRight,
-				//font = _Font;
 				richText = true,
 				fontSize = 12,
 				wordWrap = false,
 				clipping = TextClipping.Clip
 			};
-		}
-
-		public Vector3d getBoardOffset() {
-			return StaticCoordTransforms.BoardSectionToUniversalPosition(WorldSpecification.i.BoardLayout.BoardSections[eastWestBoard, northSouthBoard].BoardSectionCoords);
 		}
 
 		public void StartMatch()
@@ -239,6 +235,18 @@ namespace w0otness
 			orbitcam.distance = 100;
 			orbitcam.OperateRegardlessOfUiOptions = true;
 			orbitcam.UseOrbitTargetRotation = false;
+		}
+
+		public void MoveCam() {
+			justOrbitCam.transform.position = FramePositionOfBoardSection() + new Vector3(0, 50, 0);
+		}
+
+		public Vector3 FramePositionOfBoardSection() {
+			return PlanetList.MainFrame.UniversalPositionToFramePosition(UniversalPositionOfBoardSection());
+		}
+
+		public Vector3d UniversalPositionOfBoardSection() {
+			return StaticCoordTransforms.BoardSectionToUniversalPosition(WorldSpecification.i.BoardLayout.BoardSections[eastWestBoard, northSouthBoard].BoardSectionCoords);
 		}
 
 		public void OnGUI()
@@ -441,7 +449,7 @@ namespace w0otness
 				} else {
 					MainConstruct currentConstruct = StaticConstructablesManager.constructables[orbitIndex];
 					orbitID = currentConstruct.UniqueId;
-					orbitcam.OrbitTarget = new PositionAndRotationReturnUniverseCoord(new UniversalTransform(new Vector3d(currentConstruct.CentreOfMass), currentConstruct.SafeRotation));
+					orbitcam.OrbitTarget = new PositionAndRotationReturnUniverseCoord(new UniversalTransform(PlanetList.MainFrame.FramePositionToUniversalPosition(currentConstruct.CentreOfMass), currentConstruct.SafeRotation));
 				}
 			}
 		}
