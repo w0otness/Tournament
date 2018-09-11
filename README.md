@@ -1,4 +1,6 @@
 # Tournament
 From The Depths Tournament Mod
-
-TODO
+# Original
+w0otness
+# Modifications
+Qwert26

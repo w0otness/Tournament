@@ -1,6 +1,7 @@
 ﻿{
 	name: "Tournament",
-	version: "0.0.9",
+    gameversion: "2.2.16",
+    "version": "2.2.16.0",
 	filename: "Tournament.dll",
 	depends: [],
 	conflicts: []

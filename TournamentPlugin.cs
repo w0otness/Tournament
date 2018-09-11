@@ -1,25 +1,27 @@
 ﻿using System;
-using BrilliantSkies.FromTheDepths.Game;
-using BrilliantSkies.FromTheDepths.Planets;
+using BrilliantSkies.Core;
+using BrilliantSkies.Core.Modding;
+using BrilliantSkies.Core.Timing;
+using BrilliantSkies.Ftd.Planets;
+using BrilliantSkies.Ftd.Planets.Factions;
+using BrilliantSkies.Ftd.Planets.Instances;
+using BrilliantSkies.Ftd.Planets.Instances.Headers;
 using UnityEngine;
 
 namespace w0otness
 {
-	public class TournamentPlugin:FTDPlugin
+	public class TournamentPlugin : GamePlugin
 	{
 		static Tournament _t;
 		public void OnLoad()
 		{
-			//Debug.Log("Loading Tournament Stuff");
+			SafeLogging.Log("Loading Tournament Stuff");
 			_t = new Tournament();
-			GameEvents.PlanetChange += OnPlanetChange;
+			GameEvents.UniverseChange += OnPlanetChange;
 			GameEvents.StartEvent += OnInstanceChange;
 		}
-		
-		public void OnSave()
-		{
-			
-		}
+
+		public void OnSave() { }
 		
 		public string name {
 			get { return "Tournament"; }
@@ -30,17 +32,17 @@ namespace w0otness
 		}
 		
 		public Version version {
-			get { return new Version("0.0.9"); }
+			get { return new Version(2,2,16); }
 		}
 		
 		public static void OnInstanceChange()
 		{
-			//Debug.Log("TEST1 "+InstanceSpecification.i.Header.Name);
-			GameEvents.Twice_Second -= _t._me.SlowUpdate;
-			GameEvents.FixedUpdateEvent -= _t._me.FixedUpdate;
-			GameEvents.OnGui -= _t._me.OnGUI;
+			GameEvents.Twice_Second -= _t.SlowUpdate;
+			GameEvents.FixedUpdateEvent -= _t.FixedUpdate;
+			GameEvents.PreLateUpdate -= _t.PreLateUpdate;
+			GameEvents.OnGui -= _t.OnGUI;
 			if (@is.Header.Name == InstanceSpecification.i.Header.Name) {
-				_t._me._GUI.ActivateGui(_t._me);
+				_t._GUI.ActivateGui(_t);
 			}
 		}
 		
@@ -51,7 +53,9 @@ namespace w0otness
 			@is = new InstanceSpecification();
 			@is.Header.Name = "Tournament Creator";
 			@is.Header.Summary = "Create custom tournament style matches.";
-			@is.Header.Type = InstanceType.Designer;
+			@is.Header.Type = InstanceType.None;
+			@is.Header.CommonSettings.AvatarAvailability = AvatarAvailability.None;
+			@is.Header.CommonSettings.AvatarDamage = AvatarDamage.Off;
 			@is.Header.CommonSettings.ConstructableCleanUp = ConstructableCleanUp.Off;
 			@is.Header.CommonSettings.HeartStoneRequirement = HeartStoneRequirement.None;
 			@is.Header.CommonSettings.BuildModeRules = BuildModeRules.Disabled;
@@ -62,30 +66,28 @@ namespace w0otness
 			@is.Header.CommonSettings.FogOfWarType = FogOfWarType.None;
 			@is.Header.CommonSettings.DesignerOptions = DesignerOptions.Off;
 			@is.Header.CommonSettings.LuckyMechanic = LuckyMechanic.Off;
-			@is.GenerateBlankInstance();
+			@is.Header.CommonSettings.WarpAbility = WarpAbility.Off;
+			FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
+				Name = "King",
+				AbreviatedName = "K",
+				FleetColors = new Color[] {
+					new Color(1f, 0.84f, 0f, 0.75f),//gold
+					new Color(0.85f, 0.65f, 0.13f, 0.75f),//goldenrod
+					new Color(1f, 0.65f, 0f, 0.75f),//orange
+					new Color(0.85f, 0.55f, 0f, 0.75f)//brown-orange?
+				}
+			});
+			FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
+				Name = "Challenger",
+				AbreviatedName = "C",
+				FleetColors = new Color[] {
+					new Color(1f, 0f, 0f, 0.75f),//red
+					new Color(0.55f, 0f, 0f, 0.75f),//dark red
+					new Color(0.7f, 0.13f, 0.13f, 0.75f),//fire brick
+					new Color(1f, 0.39f, 0.23f, 0.75f)//tomato
+				}
+			});
 			Planet.i.Designers.AddInstance(@is);
-			var kid = FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
-				Name = "KING",
-				AbreviatedName = "KING",
-				FleetColors = new Color[] {
-					new Color(255f / 255f, 215f / 255f, 0f / 255f, .5f),
-					new Color(218f / 255f, 165f / 255f, 32f / 255f, .5f),
-					new Color(255f / 255f, 165f / 255f, 0f / 255f, .5f),
-					new Color(218f / 255f, 140f / 255f, 0f / 255f, .5f)
-				}
-			}).Id;
-			var cid = FactionSpecifications.i.AddNew(new FactionSpecificationFaction {
-				Name = "CHAL",
-				AbreviatedName = "CHAL",
-				FleetColors = new Color[] {
-					new Color(255f / 255f, 0f / 255f, 0f / 255f, .5f),
-					new Color(139f / 255f, 0f / 255f, 0f / 255f, .5f),
-					new Color(178f / 255f, 34f / 255f, 34f / 255f, .5f),
-					new Color(255f / 255f, 99f / 255f, 71f / 255f, .5f)
-				}
-			}).Id;
-			//Planet.i.Designers.GetInstance(@is.Header.Id).Factions.GetFaction(kid).eController = FactionController.None;
-			//Planet.i.Designers.GetInstance(@is.Header.Id).Factions.GetFaction(cid).eController = FactionController.AI_General;
 		}
 	}
 }
